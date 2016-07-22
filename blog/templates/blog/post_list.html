@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% for post in posts %}
+    <center>
+      <div class = "panel panel-info">
+          <div class = "panel-heading">
+            <h1><a href="{% url 'blog:post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+          </div>
+
+          <div class = "panel-body">
+            <p>Published: {{ post.published_date }}</p>
+            <h3>{{ post.text|linebreaksbr }}</h3>
+          </div>
+      </div>
+    </center>
+  {% endfor %}
+  <a href="{% url 'blog:post_new' %}" class="btn btn-info" role="button">Add New Post</a><br>
+{% endblock %}
