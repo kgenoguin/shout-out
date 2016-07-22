@@ -9,7 +9,8 @@
           </div>
 
           <div class = "panel-body">
-            <p>Published: {{ post.published_date }}</p>
+            <p>Created on: {{ post.created_date }}</p>
+            <p>Made by: <a href = "">{{ post.author }}</a></p>
             <h3>{{ post.text|linebreaksbr }}</h3>
           </div>
       </div>
