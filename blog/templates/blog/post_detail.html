@@ -4,7 +4,7 @@
     <div class = "panel panel-info">
         {% if post.title %}
           <div class = "panel-heading">
-            <h1><a href="">{{ post.title }}</a></h1>
+            <h1>{{ post.title }}</h1>
           </div>
         {% endif %}
 
@@ -12,7 +12,15 @@
           <p>Published: {{ post.published_date }}</p>
           <h3>{{ post.text|linebreaksbr }}</h3
         </div>
-        <a href="{% url 'blog:post_edit' pk=post.pk %}" class="btn btn-info" role="button">Edit</a>
+
+        {% if post.author == request.user %}
+          <a href="{% url 'blog:post_edit' pk=post.pk %}" class="btn btn-info" role="button">Edit</a>
+          <a href="" class="btn btn-danger" role="button">Delete</a>
+        {% else %}
+          <a href="{% url 'blog:post_edit' pk=post.pk %}" class="btn btn-info disabled" role="button">Edit</a>
+          <a href="" class="btn btn-danger disabled" role="button">Delete</a>
+        {% endif %}
+
     </div>
   </center>
 {% endblock %}

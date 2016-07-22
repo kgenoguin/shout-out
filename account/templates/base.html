@@ -19,7 +19,7 @@
         <div class = "collapse navbar-collapse" id = "bs-example-navbar-collapse-1">
           <ul class = "nav navbar-nav">
             {% if request.user.is_authenticated %}
-              <li {% if section == "Home" %} class = "selected" {% endif %}><a href="{% url "dashboard" %}">Home</a></li>
+              <li {% if section == "Home" %} class = "selected" {% endif %}><a href="{% url "blog:post_list" %}">Home</a></li>
               <li {% if section == "Posts" %} class = "selected" {% endif %}><a href="#">My Profile</a></li>
             {% endif %}
           </ul>
