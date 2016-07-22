@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Log-in{% endblock %}
+{% block content %}
+  <div class = "panel panel-info">
+    <div class = "panel-heading">
+      <h1>Log-in</h1>
+    </div>
+
+    <div class = "panel-body">
+      {% if form.errors %}
+        <p>
+        Your username and password didn't match.
+        Please try again.
+        </p>
+        {% else %}
+        <p>Please, use the following form to log-in:</p>
+      {% endif %}
+
+      <div class = "row">
+
+        <div class = "col-sm-8">
+          <div class="login-form">
+            <form action = "{% url 'login' %}" method = "post">
+              {{ form.as_p }}
+              {% csrf_token %}
+              <input type = "hidden" name = "next" value = "{{ next }}" />
+              <p><input type = "submit" value = "Log-in"></p>
+            </form>
+
+            <p><a href = "{% url "password_reset" %}">Forgotten your password?</a></p>
+            <p><a href = "{% url "register" %}">Sign up here!</a></p>
+          </div>
+        </div>
+
+        <div class = "col-sm-4" align = "right">
+          <div class="social">
+            <ul>
+              <a href="{% url "social:begin" "facebook" %}" class="btn btn-primary btn-md btn-block" role="button">Sign in with Facebook</a><br><br>
+              <a href="{% url "social:begin" "twitter" %}" class="btn btn-info btn-md btn-block" role="button">Sign in with Twitter</a><br><br>
+              <a href="{% url "social:begin" "google-oauth2" %}" class="btn btn-danger btn-md btn-block" role="button">Sign in with Google</a><br>
+            </ul>
+          </div>
+        </div>
+
+
+      </div>
+    <div>
+  </div>
+{% endblock %}

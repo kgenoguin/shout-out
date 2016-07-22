@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/1.9/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
-
+from django.core.urlresolvers import reverse_lazy
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'social.apps.django_app.default',
+    'account',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -99,6 +101,28 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+AUTHENTICATION_BACKENDS = (
+    'account.authentication.EmailAuthBackend',
+    'social.backends.facebook.Facebook2OAuth2',
+    'social.backends.twitter.TwitterOAuth',
+    'social.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_FACEBOOK_KEY = '1081767185239920' # Facebook App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = 'c874a70c0e59489fbb118a9c35c83a50' # Facebook App Secret
+
+SOCIAL_AUTH_TWITTER_KEY = '4Iqq8QkgUtlq3ryANfA0gYZZW' # Twitter Consumer Key
+SOCIAL_AUTH_TWITTER_SECRET = 'zIpDXftwS5Qp63OBvPIN7NfmS9P4JILFW785GVisnMb9VFTzmV' # Twitter Consumer Secret
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '432074192411-prkqaj9a9mlcpg7oojs626k3pm37lsd3.apps.googleusercontent.com' # Google Consumer Key
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'dViLsvI-UW1O-JGryDqLgIek' # Google Consumer Secret
+
+LOGIN_REDIRECT_URL = reverse_lazy('dashboard')
+LOGIN_URL = reverse_lazy('login')
+LOGOUT_URL = reverse_lazy('logout')
 
 
 # Internationalization
