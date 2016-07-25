@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+
 {% block content %}
   <center>
     <div class = "panel panel-info">
@@ -11,17 +12,30 @@
         <div class = "panel-body">
           <p>Created on: {{ post.created_date }}</p>
           <p>Made by: <a href = "">{{ post.author }}</a></p>
-          <h3>{{ post.text|linebreaksbr }}</h3
+          <h2><strong>{{ post.text|linebreaksbr }}</strong></h2>
+
+          <hr>
+          {% for comment in post.comments.all %}
+              <div class="comment">
+                  <div class="date">{{ comment.created_date }}</div>
+                  <p>{{ comment.author }}:{{ comment.text }}</p>
+              </div>
+              <hr>
+          {% empty %}
+              <p>No comments here yet :(</p>
+              <hr>
+          {% endfor %}
+
+
+          {% if post.author == request.user %}
+            <a href="{% url 'blog:post_edit' pk=post.pk %}" class="btn btn-primary" formenctype="multipart/form-data" class="btn btn-info" role="button">Edit</a>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
+          {% else %}
+            <a href="" class="btn btn-info disabled" role="button">Edit</a>
+            <a href="" class="btn btn-danger disabled" role="button">Delete</a>
+          {% endif %}
+            <a class="btn btn-default" href="{% url 'blog:add_comment_to_post' pk=post.pk %}">Add comment</a><br>
         </div>
-
-        {% if post.author == request.user %}
-          <a href="{% url 'blog:post_edit' pk=post.pk %}" class="btn btn-primary" formenctype="multipart/form-data" class="btn btn-info" role="button">Edit</a>
-          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button>
-        {% else %}
-          <a href="" class="btn btn-info disabled" role="button">Edit</a>
-          <a href="" class="btn btn-danger disabled" role="button">Delete</a>
-        {% endif %}
-
     </div>
 
     <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

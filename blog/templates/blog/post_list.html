@@ -12,6 +12,7 @@
             <p>Created on: {{ post.created_date }}</p>
             <p>Made by: <a href = "">{{ post.author }}</a></p>
             <h3>{{ post.text|linebreaksbr }}</h3>
+            <a href="{% url 'blog:add_comment_to_post' pk=post.pk %}">Comments: {{ post.comments.count }}</a>
           </div>
       </div>
     </center>
