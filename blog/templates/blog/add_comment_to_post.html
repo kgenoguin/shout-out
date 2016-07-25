@@ -17,12 +17,10 @@
       </div>
     </center>
   {% endfor %}
-  <center>
-    <a href="{% url 'blog:post_new' %}" class="btn btn-info" role="button">Add New Post</a><br>
-  </center>
+  <center><a href="{% url 'blog:post_new' %}" class="btn btn-info" role="button">Add New Post</a></center><br>
 
   <center>
-    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade" id="addcomment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -43,7 +41,7 @@
 
   <script type = 'text/javascript'>
     $(window).load(function(){
-        $('#edit').modal('show');
+        $('#addcomment').modal('show');
     });
   </script>
 {% endblock %}
