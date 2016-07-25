@@ -35,8 +35,9 @@ def dashboard(request):
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
+        profile_form = ProfileEditForm(request.POST)
 
-        if user_form.is_valid():
+        if user_form.is_valid() and profile_form.is_valid:
             # Create a new user object but avoid saving it yet
             new_user = user_form.save(commit=False)
 
@@ -53,8 +54,9 @@ def register(request):
 
     else:
         user_form = UserRegistrationForm()
+        profile_form = ProfileEditForm()
 
-    return render(request, 'registration/register.html', {'user_form': user_form})
+    return render(request, 'registration/register.html', {'user_form': user_form, 'profile_form' : profile_form})
 
 @login_required
 def edit(request):
@@ -74,3 +76,7 @@ def edit(request):
         profile_form = ProfileEditForm(instance = request.user.profile)
 
     return render(request,'account/edit.html',{'user_form': user_form,'profile_form': profile_form})
+
+
+def profile(request):
+    return render(request, 'account/profile.html', {})

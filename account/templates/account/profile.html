@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+  <div class = "panel panel-info">
+    <div class = "panel-heading"><h1>Profile</h1></div>
+
+    <div class = "panel-body">
+      Username: <p>{{ request.user.username }}</p><br>
+      First Name: <p>{{ request.user.first_name }}</p><br>
+      Last Name: <p>{{ request.user.last_name }}</p><br>
+      Email: <p>{{ request.user.email }}</p><br>
+      Photo: <p>{{ request.user.photo }}</p><br>
+      Date of Birth: <p>{{ request.user.date_of_birth }}</p><br>
+    </div>
+  </div>
+{% endblock %}

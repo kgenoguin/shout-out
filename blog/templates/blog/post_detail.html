@@ -15,7 +15,7 @@
         </div>
 
         {% if post.author == request.user %}
-          <a href="{% url 'blog:post_edit' pk=post.pk %}" class="btn btn-info" role="button">Edit</a>
+          <a href="{% url 'blog:post_edit' pk=post.pk %}" formenctype="multipart/form-data" class="btn btn-info" role="button">Edit</a>
           <a href="{% url 'blog:post_remove' pk=post.pk %}" class="btn btn-danger" role="button">Delete</a>
         {% else %}
           <a href="" class="btn btn-info disabled" role="button">Edit</a>
