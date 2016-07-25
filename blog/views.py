@@ -57,13 +57,13 @@ def post_edit(request, pk):
 
     else:
         form = PostForm(instance=post)
-    return render(request, 'blog/post_new.html', {'form': form})
+    return render(request, 'blog/post_edit.html', {'form': form})
 
 @login_required
 def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
-    messages.success(request, 'Post successfully deleted!')
+    messages.error(request, 'Post successfully deleted!')
 
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     return render(request, 'blog/post_list.html', {'posts' : posts})
