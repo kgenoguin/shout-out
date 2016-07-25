@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from .models import Profile
 from django.contrib import messages
+from blog.models import Post
 
 
 def user_login(request):
@@ -79,4 +80,5 @@ def edit(request):
 
 
 def profile(request):
-    return render(request, 'account/profile.html', {})
+    posts = Post.objects.filter(author = request.user).order_by('-published_date')
+    return render(request, 'account/profile.html', {'posts' : posts})
