@@ -1,8 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  {% for post in posts %}
-    <center>
+  <center>
+  {% if posts %}
+    <div class = "panel panel-info">
+      <div class = "panel-heading">
+        <h3>Add a new blog!</h3>
+      </div>
+
+      <div class = "panel-body">
+        <a href="{% url 'blog:post_new' %}" class="btn btn-info" role="button">Add New Post</a><br>
+      </div>
+
+    </div>
+
+    {% for post in posts %}
       <div class = "panel panel-info">
           <div class = "panel-heading">
             <h1><a href="{% url 'blog:post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
@@ -11,12 +23,31 @@
           <div class = "panel-body">
             <p>Created on: {{ post.created_date }}</p>
             <p>Made by: <a href = "">{{ post.author }}</a></p>
+            {% if post.photo %}
+              <img src = "{{ post.photo.url }}"/>
+            {% endif %}
             <h3>{{ post.text|linebreaksbr }}</h3>
-            <a href="{% url 'blog:add_comment_to_post' pk=post.pk %}">Comments: {{ post.comments.count }}</a>
+          </div>
+
+          <div class = "panel-footer">
+            <button type="button" class="btn btn-info">
+              <span class="glyphicon glyphicon-thumbs-up"></span> 0
+            </button>
+            <a href="{% url 'blog:add_comment_to_post' pk=post.pk %}" class="btn btn-info"><span class="glyphicon glyphicon-comment"></span> {{ post.comments.count }}</a>
           </div>
       </div>
-    </center>
-  {% endfor %}
-  <center><a href="{% url 'blog:post_new' %}" class="btn btn-info" role="button">Add New Post</a></center><br>
+    {% endfor %}
+  {% else %}
+  <div class = "panel panel-info">
+    <div class = "panel-heading">
+      <h3>There are no blogs right now!</h3>
+    </div>
+
+    <div class = "panel-body">
+      <a href="{% url 'blog:post_new' %}" class="btn btn-info" role="button">Add New Post</a><br>
+    </div>
+
+  </div>
+  {% endif %}
 
 {% endblock %}

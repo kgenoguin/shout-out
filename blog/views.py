@@ -47,12 +47,8 @@ def post_edit(request, pk):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
 
     if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
+        form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.published_date = timezone.now()
-            post.photo = form.cleaned_data["photo"]
             post.save()
             messages.success(request, 'Post successfully edited!')
 
@@ -85,6 +81,7 @@ def add_comment_to_post(request, pk):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post = post
+            comment.author = request.user
             comment.save()
             messages.success(request, 'Comment successfully posted!')
 
