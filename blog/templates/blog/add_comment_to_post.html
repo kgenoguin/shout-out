@@ -4,20 +4,23 @@
   {% for post in posts %}
     <center>
       <div class = "panel panel-info">
-          <div class = "panel-heading">
-            <h1><a href="{% url 'blog:post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
-          </div>
+        
 
           <div class = "panel-body">
             <p>Created on: {{ post.created_date }}</p>
             <p>Made by: <a href = "">{{ post.author }}</a></p>
             <h3>{{ post.text|linebreaksbr }}</h3>
-            <a href="{% url 'blog:add_comment_to_post' pk=post.pk %}">Comments: {{ post.comments.count }}</a>
+          </div>
+
+          <div class = "panel-footer">
+            <button type="button" class="btn btn-info">
+              <span class="glyphicon glyphicon-thumbs-up"></span> 0
+            </button>
+            <a href="{% url 'blog:add_comment_to_post' pk=post.pk %}" class="btn btn-info"><span class="glyphicon glyphicon-comment"></span> {{ post.comments.count }}</a>
           </div>
       </div>
     </center>
   {% endfor %}
-  <center><a href="{% url 'blog:post_new' %}" class="btn btn-info" role="button">Add New Post</a></center><br>
 
   <center>
     <div class="modal fade" id="addcomment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
@@ -25,7 +28,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Edit Post</h4>
+            <h4 class="modal-title" id="myModalLabel">Comment on Post</h4>
           </div>
           <div class="modal-body">
             <form method="POST" enctype = "multipart/form-data" class="post-form">

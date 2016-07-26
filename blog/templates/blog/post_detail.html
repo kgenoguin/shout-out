@@ -16,10 +16,7 @@
 
           <hr>
           {% for comment in post.comments.all %}
-              <div class="comment">
-                  <div class="date">{{ comment.created_date }}</div>
-                  <p>{{ comment.author }}:{{ comment.text }}</p>
-              </div>
+              <p>On&nbsp{{ comment.created_date }},&nbsp{{ comment.author }}&nbspsaid:&nbsp{{ comment.text }}</p>
               <hr>
           {% empty %}
               <p>No comments here yet :(</p>

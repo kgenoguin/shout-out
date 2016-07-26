@@ -6,6 +6,7 @@ from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditFor
 from .models import Profile
 from django.contrib import messages
 from blog.models import Post
+from django.contrib.auth.models import User
 
 
 def user_login(request):
@@ -36,9 +37,8 @@ def dashboard(request):
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
-        profile_form = ProfileEditForm(request.POST)
 
-        if user_form.is_valid() and profile_form.is_valid:
+        if user_form.is_valid():
             # Create a new user object but avoid saving it yet
             new_user = user_form.save(commit=False)
 
@@ -55,9 +55,8 @@ def register(request):
 
     else:
         user_form = UserRegistrationForm()
-        profile_form = ProfileEditForm()
 
-    return render(request, 'registration/register.html', {'user_form': user_form, 'profile_form' : profile_form})
+    return render(request, 'registration/register.html', {'user_form': user_form})
 
 @login_required
 def edit(request):
@@ -69,6 +68,9 @@ def edit(request):
             user_form.save()
             profile_form.save()
             messages.success(request, 'Profile updated successfully')
+
+            posts = Post.objects.filter(author = request.user).order_by('-published_date')
+            return render(request, 'account/profile.html', {'posts' : posts})
         else:
             messages.error(request, 'Error updating your profile')
 
@@ -76,9 +78,12 @@ def edit(request):
         user_form = UserEditForm(instance = request.user)
         profile_form = ProfileEditForm(instance = request.user.profile)
 
-    return render(request,'account/edit.html',{'user_form': user_form,'profile_form': profile_form})
+    return render(request, 'account/edit.html', {'user_form': user_form, 'profile_form': profile_form})
 
 
 def profile(request):
     posts = Post.objects.filter(author = request.user).order_by('-published_date')
-    return render(request, 'account/profile.html', {'posts' : posts})
+    profile = Profile.objects.get(user = request.user)
+    use = User.objects.get(username = request.user)
+
+    return render(request, 'account/profile.html', {'posts' : posts, 'prof' : profile, 'use' : use})

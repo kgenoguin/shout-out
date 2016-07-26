@@ -27,7 +27,15 @@ class UserEditForm(forms.ModelForm):
         fields = ('first_name', 'last_name', 'email')
 
 
+#helper function for date_of_birth
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+
 class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('date_of_birth', 'photo')
+        widgets = {
+            'date_of_birth': DateInput()
+        }
