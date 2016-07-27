@@ -2,13 +2,18 @@
 
 {% block title %}Logged out{% endblock %}
 {% block content %}
-  <div class = "panel panel-info">
-    <div class = "panel-heading">
-      <h1>Logged out</h1>
-    </div>
+  <center>
+    <div class = "w3-card-24 w3-hover-shadow w3-center" style="max-width: 75%;">
+      <div class = "panel panel-info">
+          <div class = "panel-heading">
+            <h1>Logged out</h1>
+          </div>
 
-    <div class = "panel-body">
-      <p>You have been successfully logged out. You can <a href="{% url "login" %}">log-in again</a>.</p>
+          <div class = "panel-body">
+            <p>You have been successfully logged out. You can <a href="{% url "login" %}">log-in again</a>.</p>
+          </div>
+      </div>
     </div>
-  </div>
+  </center>
+
 {% endblock %}

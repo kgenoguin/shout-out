@@ -1,34 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <center>
-    <div class = "panel panel-info">
-      <div class = "panel-heading">
-        <h3>Add a new blog!</h3>
-      </div>
-
-      <div class = "panel-body">
-        <a href="{% url 'blog:post_new' %}" class="btn btn-info" role="button">Add New Post</a><br>
-      </div>
-
-    </div>
-  </center>
-  {% for post in posts %}
-    <center>
-    <div class = "panel panel-info">
-        <div class = "panel-heading">
-          <h1><a href="{% url 'blog:post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
-        </div>
-
-        <div class = "panel-body">
-          <p>Created on: {{ post.created_date }}</p>
-          <p>Made by: <a href = "">{{ post.author }}</a></p>
-          <h3>{{ post.text|linebreaksbr }}</h3>
-          <a href="{% url 'blog:add_comment_to_post' pk=post.pk %}"><span class="glyphicon glyphicon-comment"></span> {{ post.comments.count }}</a>
-        </div>
-    </div>
-    </center>
-  {% endfor %}
+  {% include 'blog/helper_post_detail.html' %}
 
   <center>
     <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
