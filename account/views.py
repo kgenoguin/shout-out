@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
@@ -70,7 +70,10 @@ def edit(request):
             messages.success(request, 'Profile updated successfully')
 
             posts = Post.objects.filter(author = request.user).order_by('-published_date')
-            return render(request, 'account/profile.html', {'posts' : posts})
+            profile = Profile.objects.get(user = request.user)
+            use = User.objects.get(username = request.user)
+
+            return render(request, 'account/profile.html', {'posts' : posts, 'prof' : profile, 'use' : use})
         else:
             messages.error(request, 'Error updating your profile')
 
@@ -85,5 +88,13 @@ def profile(request):
     posts = Post.objects.filter(author = request.user).order_by('-published_date')
     profile = Profile.objects.get(user = request.user)
     use = User.objects.get(username = request.user)
+
+    return render(request, 'account/profile.html', {'posts' : posts, 'prof' : profile, 'use' : use})
+
+@login_required
+def view_other_profile(request, other):
+    posts = Post.objects.filter(author__username = other)
+    profile = Profile.objects.get(user__username = other)
+    use = User.objects.get(username = other)
 
     return render(request, 'account/profile.html', {'posts' : posts, 'prof' : profile, 'use' : use})

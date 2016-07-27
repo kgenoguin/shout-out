@@ -128,6 +128,13 @@ LOGIN_REDIRECT_URL = reverse_lazy('dashboard')
 LOGIN_URL = reverse_lazy('login')
 LOGOUT_URL = reverse_lazy('logout')
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'shoutoutout123@gmail.com'
+EMAIL_HOST_PASSWORD = 'irobot21'
+EMAIL_PORT = 587
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/

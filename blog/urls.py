@@ -8,4 +8,6 @@ urlpatterns = [
     url(r'^(?P<pk>\d+)/edit/$', views.post_edit, name='post_edit'),
     url(r'^(?P<pk>\d+)/remove/$', views.post_remove, name='post_remove'),
     url(r'^(?P<pk>\d+)/comment/$', views.add_comment_to_post, name='add_comment_to_post'),
+    url(r'^(?P<pk>\d+)/like/$', views.like, name='like'),
+
 ]

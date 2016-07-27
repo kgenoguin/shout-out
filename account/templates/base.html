@@ -4,13 +4,19 @@
 <html>
   <head>
     <title>{% block title %}{% endblock %}</title>
-    <script src = "//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src = "//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
+
     <link rel = "stylesheet" type = "text/css" href = "//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   </head>
 
   <body>
-    <nav class = "navbar navbar-default">
+    <nav class = "navbar navbar-inverse">
       <div class = "container-fluid">
         <div class = "navbar-header">
           <a href = "{% url "dashboard" %}"class = "navbar-brand" >Shout Out!</a>
@@ -19,14 +25,17 @@
         <div class = "collapse navbar-collapse" id = "bs-example-navbar-collapse-1">
           <ul class = "nav navbar-nav">
             {% if request.user.is_authenticated %}
-              <li {% if section == "Home" %} class = "selected" {% endif %}><a href="{% url 'blog:post_list' %}">Home</a></li>
-              <li {% if section == "Posts" %} class = "selected" {% endif %}><a href="{% url 'profile' %}">My Profile</a></li>
+
+
+              <li {% if section == "Home" %} class = "selected" {% endif %}><a href="{% url 'blog:post_list' %}"><span class="glyphicon glyphicon-home"></span>&nbspHome</a></li>
+              <li {% if section == "Posts" %} class = "selected" {% endif %}><a href="{% url 'profile' %}"><span class="glyphicon glyphicon-user"></span>&nbspMy Profile</a></li>
             {% endif %}
           </ul>
           <ul class = "nav navbar-nav navbar-right">
             {% if request.user.is_authenticated %}
+
             <li class = "dropdown">
-              <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown" role = "button" aria-haspopup = "true" aria-expanded = "false">Hello, {{ request.user.username }} <span class="caret"></span></a>
+              <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown" role = "button" aria-haspopup = "true" aria-expanded = "false"></a>
               <ul class = "dropdown-menu">
                 <li><a href = "{% url "password_change" %}">Change Password</a></li>
                 <li><a href = "{% url "edit" %}">Edit Profile</a></li>

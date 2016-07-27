@@ -4,20 +4,37 @@
 
 {% block content %}
 
-  <div class = "row">
-    <div class = "col-sm-4">
-      <div class = "panel panel-info">
-        <div class = "panel-heading"><h1>Profile</h1></div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="w3-card-24 w3-hover-shadow w3-center">
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h3><span class="glyphicon glyphicon-user"></span>Profile</h3>
+            {% if prof.photo %}
+              <img src = "{{ prof.photo.url }}" class="responsive img-circle" height="280" width="325"/>
+            {% endif %}
+          </div>
+          <div class="panel-body">
+            {% if use.username %}
+              Username: <p>{{ use.username }}</p><br>
+            {% endif %}
 
-        <div class = "panel-body">
-          Username: <p>{{ use.username }}</p><br>
-          First Name: <p>{{ use.first_name }}</p><br>
-          Last Name: <p>{{ use.last_name }}</p><br>
-          Email: <p>{{ use.email }}</p><br>
-          {% if prof.photo %}
-            <img src = "{{ prof.photo.url }}"/>
-          {% endif %}
-          Date of Birth: <p>{{ prof.date_of_birth }}</p><br>
+            {% if use.username %}
+              First Name: <p>{{ use.first_name }}</p><br>
+            {% endif %}
+
+            {% if use.username %}
+              Last Name: <p>{{ use.last_name }}</p><br>
+            {% endif %}
+
+            {% if use.username %}
+              Email: <p>{{ use.email }}</p><br>
+            {% endif %}
+
+            {% if prof.date_of_birth %}
+              Date of Birth: <p>{{ prof.date_of_birth }}</p><br>
+            {% endif %}
+          </div>
         </div>
       </div>
     </div>
@@ -25,32 +42,39 @@
     <div class = "col-sm-8">
       {% if posts %}
         {% for post in posts %}
-          <div class = "panel panel-info">
-            <div class = "panel-heading"><a href="{% url 'blog:post_detail' pk=post.pk %}">{{ post.title }}</a></div>
+          <center>
+            <div class = "w3-card-16 w3-hover-shadow w3-center">
+              <div class = "panel panel-info">
+                <div class = "panel-heading"><h3><a href="{% url 'blog:post_detail' pk=post.pk %}">{{ post.title }}</a></h3></div>
 
-            <div class = "panel-body">
-              <h3>{{ post.text|linebreaksbr }}</h3>
-              <p>Last updated on: {{ post.created_date }}</p>
-            </div>
+                <div class = "panel-body">
+                  {% if post.photo %}
+                    <img src = "{{ post.photo.url }}" class="responsive img-thumbnail" height="300" width="350"/>
+                  {% endif %}
+                  <h3>{{ post.text|linebreaksbr }}</h3>
+                  <p>Last updated on: {{ post.created_date }}</p>
+                </div>
 
-            <div class = "panel-footer">
-              <button type="button" class="btn btn-info">
-                <span class="glyphicon glyphicon-thumbs-up"></span> 0
-              </button>
-              <a href="{% url 'blog:add_comment_to_post' pk=post.pk %}" class="btn btn-info"><span class="glyphicon glyphicon-comment"></span> {{ post.comments.count }}</a>
+                <div class = "panel-footer">
+                  <a href="{% url 'blog:like' pk=post.pk %}" class="btn btn-info"><span class="glyphicon glyphicon-thumbs-up"></span> {{ post.likes.count }}</a>
+                  <a href="{% url 'blog:add_comment_to_post' pk=post.pk %}" class="btn btn-info"><span class="glyphicon glyphicon-comment"></span> {{ post.comments.count }}</a>
+                </div>
+              </div>
             </div>
-          </div>
+          <center>
         {% endfor %}
       {% else %}
         <center>
-          <div class = "panel panel-info">
-            <div class = "panel-heading">
-              <h3>You don't have any blogs right now</h3>
+          <div class="w3-card-24 w3-hover-shadow w3-center">
+            <div class = "panel panel-info">
+              <div class = "panel-heading">
+                <h3>You don't have any blogs right now</h3>
+              </div>
+              <div class = "panel-body">
+                Click&nbsp<a href="{% url 'blog:post_new' %}">here&nbsp</a>to add a new post
+              </div>
             </div>
-            <div class = "panel-body">
-              Click&nbsp<a href="{% url 'blog:post_new' %}">here&nbsp</a>to add a new post
-            </div>
-          </div
+          </div>
         </center>
       {% endif %}
     </div>
