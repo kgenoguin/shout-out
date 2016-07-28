@@ -13,6 +13,7 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ('text', )
 
+
 class LikeForm(forms.ModelForm):
     class Meta:
         model = Like

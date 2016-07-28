@@ -94,6 +94,7 @@ def add_comment_to_post(request, pk):
         form = CommentForm()
     return render(request, 'blog/add_comment_to_post.html', {'form': form, 'posts' : posts, 'post' : post})
 
+
 @login_required
 def like(request, pk):
     post = get_object_or_404(Post, pk = pk)

@@ -4,7 +4,6 @@ from django.conf import settings
 
 
 class Profile(models.Model):
-
     def upload_user_image(instance, filename):
         return u'images/users/%s/%s' % (str(instance.user), str(filename))
 

@@ -6,7 +6,7 @@
       <div class = "panel panel-info">
           {% if post.title %}
             <div class = "panel-heading">
-              <h1>{{ post.title }}</h1>
+              <h1><strong>{{ post.title }}</strong></h1>
             </div>
           {% endif %}
 
@@ -15,8 +15,8 @@
               <img src = "{{ post.photo.url }}" class= "responsive img-thumbnail"height="300" width="350"/>
             {% endif %}
             <p><br>Created on: {{ post.created_date }}</p>
-            <p>Made by: <a href = "{% url 'view_other_profile' other=post.author %}">{{ post.author }}</a></p>
-            <h2><strong>{{ post.text|linebreaksbr }}</strong></h2>
+              Made by:&nbsp<a href = "{% url 'view_other_profile' other=post.author %}">{{ post.author }}</a>
+            <h3><strong>{{ post.text|linebreaksbr }}</strong></h3>
 
             <hr>
             {% for comment in post.comments.all %}

@@ -1,32 +1,12 @@
-from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from blog.models import Post
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from .models import Profile
-from django.contrib import messages
-from blog.models import Post
-from django.contrib.auth.models import User
-
-
-def user_login(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            user = authenticate(username = cd['username'], password = cd['password'])
-
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return HttpResponse('Authenticated successfully')
-                else:
-                    return HttpResponse('Disabled account')
-            else:
-                return HttpResponse('Invalid login')
-    else:
-        form = LoginForm()
-    return render(request, 'account/login.html', {'form': form})
 
 
 @login_required
@@ -39,17 +19,10 @@ def register(request):
         user_form = UserRegistrationForm(request.POST)
 
         if user_form.is_valid():
-            # Create a new user object but avoid saving it yet
             new_user = user_form.save(commit=False)
-
-            # Set the chosen password
             new_user.set_password(user_form.cleaned_data['password'])
-
-            # Save the User object
             new_user.save()
-
-            # Create the user profile
-            profile = Profile.objects.create(user=new_user)
+            profile = Profile.objects.create(user = new_user)
 
             return render(request, 'registration/register_done.html', {'new_user': new_user})
 
@@ -58,8 +31,13 @@ def register(request):
 
     return render(request, 'registration/register.html', {'user_form': user_form})
 
+
 @login_required
 def edit(request):
+    posts = Post.objects.filter(author = request.user).order_by('-published_date')
+    profile = Profile.objects.get(user = request.user)
+    use = User.objects.get(username = request.user)
+
     if request.method == 'POST':
         user_form = UserEditForm(instance = request.user,data = request.POST)
         profile_form = ProfileEditForm(instance = request.user.profile,data = request.POST,files = request.FILES)
@@ -74,6 +52,7 @@ def edit(request):
             use = User.objects.get(username = request.user)
 
             return render(request, 'account/profile.html', {'posts' : posts, 'prof' : profile, 'use' : use})
+
         else:
             messages.error(request, 'Error updating your profile')
 
@@ -81,9 +60,10 @@ def edit(request):
         user_form = UserEditForm(instance = request.user)
         profile_form = ProfileEditForm(instance = request.user.profile)
 
-    return render(request, 'account/edit.html', {'user_form': user_form, 'profile_form': profile_form})
+    return render(request, 'account/edit.html', {'user_form': user_form, 'profile_form': profile_form, 'posts' : posts, 'prof' : profile, 'use' : use})
 
 
+@login_required
 def profile(request):
     posts = Post.objects.filter(author = request.user).order_by('-published_date')
     profile = Profile.objects.get(user = request.user)

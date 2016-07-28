@@ -17,6 +17,7 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+
 class Comment(models.Model):
     post = models.ForeignKey('blog.Post', related_name = 'comments')
     text = models.TextField()
@@ -24,6 +25,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
+
 
 class Like(models.Model):
     post = models.ForeignKey('blog.Post', related_name = 'likes')

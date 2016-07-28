@@ -1,42 +1,68 @@
 {% extends "base.html" %}
 
+{% load widget_tweaks %}
+
 {% block title %}Log-in{% endblock %}
+
 {% block content %}
-  <center>
-  <div class="w3-card-16 w3-hover-shadow w3-center" style="max-width: 80%;">
-    <div class = "panel panel-info" >
-      <div class = "panel-heading">
-        <h1>Log-in</h1>
-      </div>
+<center>
+  <div class="container">
+    <div id="loginbox" style="margin-top:40px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+      <div class="panel panel-info" style="max-width:75%;">
+        <div class="panel-heading">
+          <div class="panel-title"><h3><strong>Sign In</strong><h3></div>
+          <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="{% url 'password_reset'%}">Forgot password?</a></div>
+        </div>
 
-      <div class = "panel-body" >
-        {% if form.errors %}
-          <p>
-          Your username and password didn't match.
-          Please try again.
-          </p>
-          {% else %}
-          <p>Please, use the following form to log-in:</p>
-        {% endif %}
+        <div style="padding-top:30px" class="panel-body" >
+          <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+          <form class="form" method="POST" enctype="multipart/form-data">{% csrf_token %}
+            <fieldset>
+              {% for field in form.visible_fields %}
+                {% if field.errors %}
+                  <div class="control-group error">
+                    <label class="controls col-sm-14">{{ field.label }}</label>
+                    <div class="col-sm-14">{{ field|add_class:"form-control" }}
+                      <span class="help-inline">
+                        {% for error in  field.errors %}{{ error }}{% endfor %}
+                      </span>
+                    </div>
+                  </div>
 
+                {% else %}
+                  <div class="form-group">
+                    <label class="controls col-sm-14">{{ field.label }}</label>
+                    <div class="col-sm-14">{{ field|add_class:"form-control" }}
+                      {% if field.help_text %}
+                        <p class="help-inline"><small>{{ field.help_text }}</small></p>
+                      {% endif %}
+                    </div>
+                  </div>
 
-            <div class="login-form">
-              <form action = "{% url 'login' %}" method = "post">
-                {{ form.as_p }}
-                {% csrf_token %}
-                <input type = "hidden" name = "next" value = "{{ next }}" />
-                <p><input type = "submit" value = "Log-in"></p>
-              </form>
+                {% endif %}
+              {% endfor %}
+            </fieldset>
 
-              <p><a href = "{% url "password_reset" %}">Forgotten your password?</a></p>
-              <p><a href = "{% url "register" %}">Sign up here!</a></p>
+            <div style="margin-top:10px" class="form-group">
+              <div class="col-sm-12 controls">
+                <button type="submit" class="btn btn-primary">Login</button><br><hr>
+                <a href="{% url "social:begin" "facebook" %}" class="btn btn-primary" role="button">Sign in with Facebook</a>
+                <a href="{% url "social:begin" "twitter" %}" class="btn btn-info" role="button">Sign in with Twitter</a>
+                <a href="{% url "social:begin" "google-oauth2" %}" class="btn btn-danger" role="button">Sign in with Google</a>
+              </div>
             </div>
 
-              <a href="{% url "social:begin" "facebook" %}" class="btn btn-primary" role="button">Sign in with Facebook</a><br><br>
-              <a href="{% url "social:begin" "twitter" %}" class="btn btn-info" role="button">Sign in with Twitter</a><br><br>
-              <a href="{% url "social:begin" "google-oauth2" %}" class="btn btn-danger" role="button">Sign in with Google</a><br><br>
-
-      <div>
+            <div class="form-actions">
+              <div class="col-md-12 control">
+                <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
+                  Don't have an account!
+                  <a href="{% url 'register' %}">Sign Up Here</a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 </center>

@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/1.9/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
+
 from django.core.urlresolvers import reverse_lazy
 import os
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,11 +29,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
-
 INSTALLED_APPS = [
     'social.apps.django_app.default',
+    'widget_tweaks',
     'account',
     'blog',
     'django.contrib.admin',
@@ -106,10 +107,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTHENTICATION_BACKENDS = (
     'account.authentication.EmailAuthBackend',
-    'social.backends.facebook.Facebook2OAuth2',
-    'social.backends.twitter.TwitterOAuth',
-    'social.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
+    'social.backends.facebook.Facebook2OAuth2',
+    'social.backends.google.GoogleOAuth2',
+    'social.backends.twitter.TwitterOAuth',
 )
 
 SOCIAL_AUTH_FACEBOOK_KEY = '636033656552428' # Facebook App ID
@@ -127,6 +128,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'dViLsvI-UW1O-JGryDqLgIek' # Google Consumer 
 LOGIN_REDIRECT_URL = reverse_lazy('dashboard')
 LOGIN_URL = reverse_lazy('login')
 LOGOUT_URL = reverse_lazy('logout')
+
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
