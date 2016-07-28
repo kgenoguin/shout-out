@@ -1,23 +1,11 @@
 {% extends "base.html" %}
 
+{% load widget_tweaks %}
+
 {% block title %}Edit your account{% endblock %}
 
 {% block content %}
-  <div class = "panel panel-info">
-    <div class = "panel-heading">
-      <h1>Edit your account</h1>
-    </div>
-
-    <div class = "panel-body">
-      <p>You can edit your account using the following form:</p>
-      <form action = "" method = "post" enctype = "multipart/form-data">
-        {{ user_form.as_p }}
-        {{ profile_form.as_p }}
-        {% csrf_token %}
-        <p><input type = "submit" value = "Save changes"></p>
-      </form>
-    </div>
-  </div>
+  {% include 'account/helper_edit.html' %}
 
   <center>
     <div class="modal fade" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
@@ -27,12 +15,62 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">Edit Profile</h4>
           </div>
+
           <div class="modal-body">
-            <form method="POST" action="" enctype = "multipart/form-data" class="post-form">
-                {% csrf_token %}
-                {{ user_form.as_p }}
-                {{ profile_form.as_p }}
-                <button type="submit" class="save btn btn-primary">Save</button>
+            <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+              <fieldset>
+                {% for field in user_form.visible_fields %}
+                  {% if field.errors %}
+                    <div class="control-group error">
+                      <label class="controls col-sm-14">{{ field.label }}</label>
+                      <div class="col-sm-14">{{ field|add_class:"form-control" }}
+                          <span class="help-inline">
+                              {% for error in  field.errors %}{{ error }}{% endfor %}
+                          </span>
+                      </div>
+                    </div>
+                  {% else %}
+                    <div class="form-group">
+                      <label class="control-label col-sm-14">{{ field.label }}</label>
+                      <div class="controls col-sm-14">{{ field|add_class:"form-control" }}
+                        {% if field.help_text %}
+                            <p class="help-inline"><small>{{ field.help_text }}</small></p>
+                        {% endif %}
+                      </div>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </fieldset>
+
+              <fieldset>
+                {% for field in profile_form.visible_fields %}
+                  {% if field.errors %}
+                    <div class="control-group error">
+                      <label class="controls col-sm-14">{{ field.label }}</label>
+                      <div class="col-sm-14">{{ field|add_class:"form-control" }}
+                          <span class="help-inline">
+                              {% for error in  field.errors %}{{ error }}{% endfor %}
+                          </span>
+                      </div>
+                    </div>
+                  {% else %}
+                    <div class="form-group">
+                      <label class="control-label col-sm-14">{{ field.label }}</label>
+                      <div class="controls col-sm-14">{{ field|add_class:"form-control" }}
+                        {% if field.help_text %}
+                            <p class="help-inline"><small>{{ field.help_text }}</small></p>
+                        {% endif %}
+                      </div>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </fieldset>
+
+                <div class="form-actions">
+                  <center>
+                    <button type="submit" class="btn btn-primary">Edit</button><br>
+                  </center>
+                </div>
             </form>
           </div>
         </div>

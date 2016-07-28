@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from . import views
 
+
 urlpatterns = [
     url(r'^login/$',
         'django.contrib.auth.views.login',
@@ -22,7 +23,6 @@ urlpatterns = [
         name = 'dashboard'),
 
 
-    # change password urls
     url(r'^password-change/$',
         'django.contrib.auth.views.password_change',
         name = 'password_change'),

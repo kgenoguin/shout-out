@@ -12,67 +12,68 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
 
-    <link rel = "stylesheet" type = "text/css" href = "//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+    <!-- font icon -->
+    <link href="http://agila.upm.edu.ph/~kjgenoguin/CCSO/assets/css/elegant-icons-style.css" rel="stylesheet" />
   </head>
 
   <body>
-    <nav class = "navbar navbar-inverse">
-      <div class = "container-fluid">
-        <div class = "navbar-header">
-          <a href = "{% url "dashboard" %}"class = "navbar-brand" >Shout Out!</a>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a href="{% url "dashboard" %}"class="navbar-brand" >Shout Out!</a>
         </div>
 
-        <div class = "collapse navbar-collapse" id = "bs-example-navbar-collapse-1">
-          <ul class = "nav navbar-nav">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
             {% if request.user.is_authenticated %}
-
-
               <li {% if section == "Home" %} class = "selected" {% endif %}><a href="{% url 'blog:post_list' %}"><span class="glyphicon glyphicon-home"></span>&nbspHome</a></li>
               <li {% if section == "Posts" %} class = "selected" {% endif %}><a href="{% url 'profile' %}"><span class="glyphicon glyphicon-user"></span>&nbspMy Profile</a></li>
             {% endif %}
           </ul>
-          <ul class = "nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right">
             {% if request.user.is_authenticated %}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"></a>
+                <ul class="dropdown-menu">
+                  <li><a href="{% url "password_change" %}">Change Password</a></li>
+                  <li><a href="{% url "edit" %}">Edit Profile</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a data-toggle="modal" data-target="#logout">Logout</a></li>
+                </ul>
+              </li>
 
-            <li class = "dropdown">
-              <a href = "#" class = "dropdown-toggle" data-toggle = "dropdown" role = "button" aria-haspopup = "true" aria-expanded = "false"></a>
-              <ul class = "dropdown-menu">
-                <li><a href = "{% url "password_change" %}">Change Password</a></li>
-                <li><a href = "{% url "edit" %}">Edit Profile</a></li>
-                <li role = "separator" class = "divider"></li>
-                <li><a data-toggle="modal" data-target="#logout">Logout</a></li>
-              </ul>
-            </li>
             {% else %}
-            <li><a href = "{% url "login" %}">Log-in</a></li>
+              <li><a href="{% url "login" %}">Log-in</a></li>
             {% endif %}
           </ul>
         </div>
       </div>
     </nav>
 
-
-    <div class = "container">
+    <div class="container">
       {% if messages %}
-          {% for message in messages %}
-            {% if message.tags == "error" %}
-              <div class = "alert alert-danger fade in">
-                {{ message|safe }}
-                <a href = "#" class = "close" data-dismiss = "alert">✖</a>
-              </div>
-            {% else %}
-              <div class = "alert alert-{{ message.tags }} fade in">
-                {{ message|safe }}
-                <a href = "#" class = "close" data-dismiss = "alert">✖</a>
-              </div>
-            {% endif %}
-          {% endfor %}
+        {% for message in messages %}
+          {% if message.tags == "error" %}
+            <div class = "alert alert-danger fade in">
+              {{ message|safe }}
+              <a href = "#" class = "close" data-dismiss = "alert">✖</a>
+            </div>
+
+          {% else %}
+            <div class="alert alert-{{ message.tags }} fade in">
+              {{ message|safe }}
+              <a href="#" class="close" data-dismiss="alert">✖</a>
+            </div>
+          {% endif %}
+        {% endfor %}
       {% endif %}
 
       {% block content %}
       {% endblock %}
     </div>
-
 
     <center>
       <div class="modal fade" id="logout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
