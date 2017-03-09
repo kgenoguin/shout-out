@@ -43,15 +43,6 @@
               {% endfor %}
             </fieldset>
 
-            <div style="margin-top:10px" class="form-group">
-              <div class="col-sm-12 controls">
-                <button type="submit" class="btn btn-primary">Login</button><br><hr>
-                <a href="{% url "social:begin" "facebook" %}" class="btn btn-primary" role="button">Sign in with Facebook</a>
-                <a href="{% url "social:begin" "twitter" %}" class="btn btn-info" role="button">Sign in with Twitter</a>
-                <a href="{% url "social:begin" "google-oauth2" %}" class="btn btn-danger" role="button">Sign in with Google</a>
-              </div>
-            </div>
-
             <div class="form-actions">
               <div class="col-md-12 control">
                 <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%">
